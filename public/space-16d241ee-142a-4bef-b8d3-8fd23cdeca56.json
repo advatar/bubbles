@@ -1,0 +1,201 @@
+{
+    "guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+    "name": "development",
+    "apps": [{
+        "guid": "aab81f57-f944-45f4-9824-efed8cc378e6",
+        "urls": ["cpanel.cfapps.io"],
+        "routes": [{
+            "guid": "29f99eef-efcf-4b6b-90fd-86966cc63e12",
+            "host": "cpanel",
+            "domain": {
+                "guid": "fb6bd89f-2ed9-49d4-9ad1-97951a573135",
+                "name": "cfapps.io"
+            }
+        }],
+        "service_count": 0,
+        "service_names": [],
+        "running_instances": 0,
+        "name": "cpanel",
+        "production": false,
+        "space_guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+        "stack_guid": "50688ae5-9bfc-4bf6-a4bf-caadb21a32c6",
+        "buildpack": null,
+        "detected_buildpack": "Ruby/Rack",
+        "environment_json": {},
+        "memory": 64,
+        "instances": 1,
+        "disk_quota": 1024,
+        "state": "STARTED",
+        "version": "2762533d-22ad-4ae8-9ae6-db7d3b843c4d",
+        "command": null,
+        "console": true,
+        "debug": null,
+        "staging_task_id": "0b95a95c89fdf61a8c1f9d250631f82c"
+    }, {
+        "guid": "ec6e1b74-7168-4664-8088-d354f035654d",
+        "urls": ["cloudberry.cfapps.io"],
+        "routes": [{
+            "guid": "d703c7cc-3d44-49cf-bd2d-bdfba57f0091",
+            "host": "cloudberry",
+            "domain": {
+                "guid": "fb6bd89f-2ed9-49d4-9ad1-97951a573135",
+                "name": "cfapps.io"
+            }
+        }],
+        "service_count": 0,
+        "service_names": [],
+        "running_instances": 0,
+        "name": "demo",
+        "production": false,
+        "space_guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+        "stack_guid": "50688ae5-9bfc-4bf6-a4bf-caadb21a32c6",
+        "buildpack": null,
+        "detected_buildpack": "Ruby/Rails",
+        "environment_json": {},
+        "memory": 128,
+        "instances": 1,
+        "disk_quota": 1024,
+        "state": "STARTED",
+        "version": "f66de624-2f42-447b-aec6-0961038f6c22",
+        "command": null,
+        "console": true,
+        "debug": null,
+        "staging_task_id": "088e16339a51bdb889dbd193c31dc282"
+    }, {
+        "guid": "25ebfafc-2ef6-45b8-96f3-16770620b8e7",
+        "urls": ["espconsole.cfapps.io"],
+        "routes": [{
+            "guid": "3d1a0ba7-8322-4460-8715-ea00561075dd",
+            "host": "espconsole",
+            "domain": {
+                "guid": "fb6bd89f-2ed9-49d4-9ad1-97951a573135",
+                "name": "cfapps.io"
+            }
+        }],
+        "service_count": 0,
+        "service_names": [],
+        "running_instances": 1,
+        "name": "espconsole",
+        "production": false,
+        "space_guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+        "stack_guid": "50688ae5-9bfc-4bf6-a4bf-caadb21a32c6",
+        "buildpack": null,
+        "detected_buildpack": "Ruby/Rails",
+        "environment_json": {},
+        "memory": 128,
+        "instances": 1,
+        "disk_quota": 1024,
+        "state": "STARTED",
+        "version": "5fdf19d7-c3d9-499f-a327-a36d02093d1f",
+        "command": null,
+        "console": true,
+        "debug": null,
+        "staging_task_id": "61c27fc32caec2aa026ebfff2faa0159"
+    }, {
+        "guid": "0f98da59-db3f-486d-8d40-317b355c721b",
+        "urls": ["gitteh.cfapps.io"],
+        "routes": [{
+            "guid": "5dfc5d44-2ca3-4cf6-8b95-4040ae8c164a",
+            "host": "gitteh",
+            "domain": {
+                "guid": "fb6bd89f-2ed9-49d4-9ad1-97951a573135",
+                "name": "cfapps.io"
+            }
+        }],
+        "service_count": 0,
+        "service_names": [],
+        "running_instances": 0,
+        "name": "gitteh",
+        "production": false,
+        "space_guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+        "stack_guid": "50688ae5-9bfc-4bf6-a4bf-caadb21a32c6",
+        "buildpack": null,
+        "detected_buildpack": null,
+        "environment_json": {},
+        "memory": 64,
+        "instances": 1,
+        "disk_quota": 1024,
+        "state": "STARTED",
+        "version": "6cda1bef-ae58-4277-b564-1ff64fb02214",
+        "command": null,
+        "console": true,
+        "debug": null,
+        "staging_task_id": "c4462144b15d0543f0dc4e941f2589a8"
+    }],
+    "services": [{
+        "guid": "aa702208-4085-40e9-bdcb-0e6773c913b3",
+        "name": "cleardb",
+        "bound_app_count": 0,
+        "dashboard_url": "https://cloudfoundry.appdirect.com/api/custom/cloudfoundry/v1/services/c8ea611a-96d5-469a-963f-a433eaef68a1/sso",
+        "service_plan": {
+            "guid": "b3f94638-02d7-42e7-88c9-1c7e95a46312",
+            "name": "spark",
+            "service": {
+                "guid": "b69c1429-bc42-43c7-9f37-009f2b4a1a7d",
+                "label": "cleardb",
+                "provider": "cleardb",
+                "version": "n/a"
+            }
+        }
+    }, {
+        "guid": "15cdd678-0194-4616-ab88-187ecc6eda74",
+        "name": "elepahntsql",
+        "bound_app_count": 0,
+        "dashboard_url": "https://cloudfoundry.appdirect.com/api/custom/cloudfoundry/v1/services/f6098fb9-d84d-4a80-8c1e-8d405205be01/sso",
+        "service_plan": {
+            "guid": "6a48feb3-8c84-43a8-8f49-301589bb0763",
+            "name": "turtle",
+            "service": {
+                "guid": "e2278892-7ebb-41d2-8c53-54cc1671ab2d",
+                "label": "elephantsql",
+                "provider": "elephantsql",
+                "version": "n/a"
+            }
+        }
+    }, {
+        "guid": "034a3ed9-ee27-4e5e-9d50-4850fdbe793b",
+        "name": "mongolab",
+        "bound_app_count": 0,
+        "dashboard_url": "https://cloudfoundry.appdirect.com/api/custom/cloudfoundry/v1/services/05f84099-1028-40b4-aca9-517e43169c94/sso",
+        "service_plan": {
+            "guid": "9fb19111-cf34-4056-87ef-959e830340e0",
+            "name": "sandbox",
+            "service": {
+                "guid": "15790581-a293-489b-9efc-847ecf1b1339",
+                "label": "mongolab",
+                "provider": "mongolab",
+                "version": "n/a"
+            }
+        }
+    }, {
+        "guid": "1e12361c-8870-4576-875f-db4a2b94eab2",
+        "name": "rediscloud",
+        "bound_app_count": 0,
+        "dashboard_url": "https://cloudfoundry.appdirect.com/api/custom/cloudfoundry/v1/services/c6708591-fbf2-43cd-804e-5445d140227b/sso",
+        "service_plan": {
+            "guid": "8273db79-b3a1-40e2-b5cf-a9c8d74d7e63",
+            "name": "20mb",
+            "service": {
+                "guid": "9e800ade-7765-433b-98b0-541b3f127353",
+                "label": "rediscloud",
+                "provider": "garantiadata",
+                "version": "n/a"
+            }
+        }
+    }, {
+        "guid": "ae6acb07-de6f-4787-9cbd-0b315662a1d0",
+        "name": "treasuredata",
+        "bound_app_count": 0,
+        "dashboard_url": "https://cloudfoundry.appdirect.com/api/custom/cloudfoundry/v1/services/85b6a9ed-af36-405f-9291-15d385eabd1d/sso",
+        "service_plan": {
+            "guid": "0f8df6b3-6f5a-444c-b71a-0f0cc9047545",
+            "name": "nano",
+            "service": {
+                "guid": "9061d721-1180-4f5b-a8d0-dda0fb3a4b69",
+                "label": "treasuredata",
+                "provider": "treasuredata",
+                "version": "n/a"
+            }
+        }
+    }]
+}

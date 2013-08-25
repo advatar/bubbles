@@ -1,0 +1,23 @@
+{
+  "name": "bubbles",
+  "version": "0.0.0",
+  "authors": [
+    "Johan Sellström <johan.sellstrom@ericsson.com>"
+  ],
+  "description": "Bubble visualization of Cloudfoundry Applings",
+  "main": "app.js",
+  "keywords": [
+    "cloudfoundry",
+    "cloud",
+    "applings"
+  ],
+  "license": "MIT",
+  "homepage": "http://applings.cfapps.io",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

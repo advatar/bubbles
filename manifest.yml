@@ -1,0 +1,10 @@
+---
+applications:
+- name: bubbles
+  memory: 128M
+  instances: 1
+  host: bubbles
+  domain: cfapps.io
+  path: .
+  command: node app
+  buildpack: http://github.com/heroku/heroku-buildpack-nodejs.git

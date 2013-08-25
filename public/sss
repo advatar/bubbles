@@ -1,0 +1,130 @@
+"children": [{
+    "guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+    "name": "development",
+
+    "children": [{
+        "guid": "aab81f57-f944-45f4-9824-efed8cc378e6",
+        "urls": ["cpanel.cfapps.io"],
+        "routes": [{
+            "guid": "29f99eef-efcf-4b6b-90fd-86966cc63e12",
+            "host": "cpanel",
+            "domain": {
+                "guid": "fb6bd89f-2ed9-49d4-9ad1-97951a573135",
+                "name": "cfapps.io"
+            }
+        }],
+        "size": 40,
+        "service_count": 0,
+        "service_names": [],
+        "running_instances": 0,
+        "name": "cpanel",
+        "production": false,
+        "space_guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+        "stack_guid": "50688ae5-9bfc-4bf6-a4bf-caadb21a32c6",
+        "buildpack": null,
+        "detected_buildpack": "Ruby/Rack",
+        "environment_json": {},
+        "memory": 64,
+        "instances": 1,
+        "disk_quota": 1024,
+        "state": "STARTED",
+        "version": "2762533d-22ad-4ae8-9ae6-db7d3b843c4d",
+        "command": null,
+        "console": true,
+        "debug": null,
+        "staging_task_id": "0b95a95c89fdf61a8c1f9d250631f82c"
+    }, {
+        "guid": "ec6e1b74-7168-4664-8088-d354f035654d",
+        "urls": ["cloudberry.cfapps.io"],
+        "routes": [{
+            "guid": "d703c7cc-3d44-49cf-bd2d-bdfba57f0091",
+            "host": "cloudberry",
+            "domain": {
+                "guid": "fb6bd89f-2ed9-49d4-9ad1-97951a573135",
+                "name": "cfapps.io"
+            }
+        }],
+        "size": 40,
+        "service_count": 0,
+        "service_names": [],
+        "running_instances": 0,
+        "name": "demo",
+        "production": false,
+        "space_guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+        "stack_guid": "50688ae5-9bfc-4bf6-a4bf-caadb21a32c6",
+        "buildpack": null,
+        "detected_buildpack": "Ruby/Rails",
+        "environment_json": {},
+        "memory": 128,
+        "instances": 1,
+        "disk_quota": 1024,
+        "state": "STARTED",
+        "version": "f66de624-2f42-447b-aec6-0961038f6c22",
+        "command": null,
+        "console": true,
+        "debug": null,
+        "staging_task_id": "088e16339a51bdb889dbd193c31dc282"
+    }, {
+        "guid": "25ebfafc-2ef6-45b8-96f3-16770620b8e7",
+        "urls": ["espconsole.cfapps.io"],
+        "routes": [{
+            "guid": "3d1a0ba7-8322-4460-8715-ea00561075dd",
+            "host": "espconsole",
+            "domain": {
+                "guid": "fb6bd89f-2ed9-49d4-9ad1-97951a573135",
+                "name": "cfapps.io"
+            }
+        }],
+        "size": 100,
+        "service_count": 0,
+        "service_names": [],
+        "running_instances": 1,
+        "name": "espconsole",
+        "production": false,
+        "space_guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+        "stack_guid": "50688ae5-9bfc-4bf6-a4bf-caadb21a32c6",
+        "buildpack": null,
+        "detected_buildpack": "Ruby/Rails",
+        "environment_json": {},
+        "memory": 128,
+        "instances": 1,
+        "disk_quota": 1024,
+        "state": "STARTED",
+        "version": "5fdf19d7-c3d9-499f-a327-a36d02093d1f",
+        "command": null,
+        "console": true,
+        "debug": null,
+        "staging_task_id": "61c27fc32caec2aa026ebfff2faa0159"
+    }, {
+        "guid": "0f98da59-db3f-486d-8d40-317b355c721b",
+        "urls": ["gitteh.cfapps.io"],
+        "routes": [{
+            "guid": "5dfc5d44-2ca3-4cf6-8b95-4040ae8c164a",
+            "host": "gitteh",
+            "domain": {
+                "guid": "fb6bd89f-2ed9-49d4-9ad1-97951a573135",
+                "name": "cfapps.io"
+            }
+        }],
+        "size": 100,
+        "service_count": 0,
+        "service_names": [],
+        "running_instances": 0,
+        "name": "advatar/development/gitteh",
+        "production": false,
+        "space_guid": "16d241ee-142a-4bef-b8d3-8fd23cdeca56",
+        "stack_guid": "50688ae5-9bfc-4bf6-a4bf-caadb21a32c6",
+        "buildpack": null,
+        "detected_buildpack": null,
+        "environment_json": {},
+        "memory": 64,
+        "instances": 1,
+        "disk_quota": 1024,
+        "state": "STARTED",
+        "version": "6cda1bef-ae58-4277-b564-1ff64fb02214",
+        "command": null,
+        "console": true,
+        "debug": null,
+        "staging_task_id": "c4462144b15d0543f0dc4e941f2589a8"
+    }]
+}]
