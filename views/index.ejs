@@ -1,332 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="content-type" content="text/html;charset=utf-8">
-      <title><%=title%></title>
-      <link href="css/bootstrap.css" rel="stylesheet" media="screen">
-      <link href="css/sticky-footer.css" rel="stylesheet">
-      <link rel="stylesheet" href="css/bootstrap-switch.css">
-      <link rel="stylesheet" href="lib/codemirror.css">
-      <script src="//code.jquery.com/jquery.js"></script>
-      <script src="javascripts/bootstrap.min.js"></script>
-
-      <script src="javascripts/codemirror.js"></script>
-      <script src="javascripts/addon/edit/matchbrackets.js"></script>
-      <script src="javascripts/addon/edit/continuecomment.js"></script>
-      <script src="javascripts/addon/comment/comment.js"></script>
-      <script src="javascript.js"></script>
-      <script src="javascripts/bootstrap-switch.js"></script>
-      <style type="text/css">
-        .CodeMirror { border-top: 1px solid black; 
-                      border-bottom: 1px solid black;} 
-
-      div.row {margin-bottom:20px;}
-      
-      </style>
-    
-  </head>
-  
-  <body>
-      <div class="container">
-        <div class="page-header">
-          <h1 class="text-muted"><%=title%></h1>
-                       <div style="margin-top:10px;padding:5px;position:relative;bottom:5px;">
-                <!--<input type="text" class="form-group-lg" value="<%=api%>"> -->
-                <button type="button" class="btn btn-default ">RUN</button>&nbsp;<button type="button" class="btn btn-default ">INSTALL</button>&nbsp;              
-                <div class="make-switch"><input type="checkbox" class="form-group-lg"></div>
-              </div>
-
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-              <div class="pull-left">
-                <a href=/bubbles><img src=images/bubbles.png></a>
-              </div>
-          </div>
-          <div class="col-md-6">
-            <fieldset>
-              <label class=text-muted>Seeing is believing</label><br>Visualization of the different layers that make up a full stack cloud. From the metal at the bottom via the OpenStack IaaS to the Cloudfoundry Platform layer and finally the actual application.
-             </fieldset>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-10 tabbable">
-            <ul id="sourceTabs" class="nav nav-tabs" data-tabs="tabs">
-              <li class="active"><a href="#readme" data-toggle="tab">README</a></li>
-              <li ><a href="#server" data-toggle="tab">Server</a></li>
-              <li><a href="#client" data-toggle="tab">Client</a></li>
-              <li><a href="#manifest" data-toggle="tab">Manifest</a></li>
-              <li><a href="#console" data-toggle="tab">Console</a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="server">
-                <textarea id="server_code" name="server_code" style="display: none; ">
-var express = require('express')
-  , http = require('http')
-  , https = require('https')
-  , path = require('path')
-  , fs = require('fs')
-  , sa = require("superagent")
-  , _ = require("underscore")
-  , async = require("async")
-
-var app = express();
-
-var mode = "bubbles";
-var config,UAA,API;
-
-function configure(cloud)
-{
-  config = require("./config-"+cloud+".json");
-  UAA= config.uaa ? config.uaa : "http://uaa.run.pivotal.io";
-  API= config.api ? config.api :"http://api.run.pivotal.io";
-}
-
-app.configure(function(){
-  app.set('port', process.env.PORT || 2013);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.use(express.favicon());
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser('extra sensory perspiration'));
-  app.use(express.session());
-  app.use(express.static(path.join(__dirname, 'public')));
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler());
-});
-
-function reset()
-{
-  return [{guid:0,name:API,children:[],metadata:{guid:"-1"}}];
-}
-
-function checkAuth(req, res, next) {
-
-  if (req.cookies.access_token && req.cookies.user_id)
-    next();
-  else if (config.token && config.user_id)
-  {
-    res.cookie('access_token', config.token, { maxAge: 900000, httpOnly: false});
-    res.cookie('user_id', config.user_id, { maxAge: 900000, httpOnly: false});
-    next();
-  }
-  else {
-    res.redirect('/login');
-  } 
-}
-
-function getToken(options, cont) {
-  var body = {
-    response_type: "token",
-    grant_type: "password",
-    username: options.username,
-    password: options.password
-  };
-  sa.post(UAA+'/oauth/token')
-    .send(body)
-    .type('form')
-    .set('Accept', 'application/json')
-    .set('Authorization', 'Basic Y2Y6')
-    .end(function (error, res) {
-      cont(error,res);
-    })
-}
-
-function find(parents, guid)
-{
-  for(i=0;i<parents.length;i++)
-  {
-    if (parents[i].metadata.guid==guid)
-      return parents[i];
-  }
-  return null;
-}
-
-function insert(parents, node, guid)
-{
-  parent = find(parents,guid);
-  if (!parent)
-  {
-    return null;
-  }
-  if (!parent.children)
-  {
-    parent.children = [];
-  }
-  if (!node.name)
-    node.name = node.entity.name;
-  if (!node.size)
-    node.size = 100;
-  if (node.entity.instances)
-  {
-    quota = {guid:-1,name:" ",children:[{name:node.entity.memory+"M",size:100},{name:node.entity.disk_quota+"G",size:100}]};
-    if (!node.children) 
-      node.children=[];
-    node.children.push(quota);
-    console.log(quota);
-  }
-  parent.children.push(node);
-}
-
-app.get('/', function(req,res){
-  res.render('index', { title: 'Fullstack Apps',api:API});
-}); 
-
-app.get('/bubbles',checkAuth,function(req,res){
-  res.render('bubbles', { title: 'Bubbles'});
-}); 
-
-app.get('/treemap',checkAuth,function(req,res){
-  res.render('treemap', { title: 'Treemap' });
-}); 
-
-app.get('/poll',checkAuth,function(req,res){
-  root = reset();
-  token = req.session.access_token || req.cookies.access_token;
-  async.waterfall(
-    [
-    function(callback){
-      sa
-      .get(API+'/v2/organizations')
-      .set('Authorization', token)
-      .set('Accept', 'application/json')
-      .end(function(error, result){
-        if (!error)
-        {
-          organizations = JSON.parse(result.text).resources;
-          callback(null);
-        }
-        else
-          callback(error);
-      }); 
-    },
-    function(callback){
-      sa
-      .get(API+'/v2/spaces')
-      .set('Authorization', token)
-      .set('Accept', 'application/json')
-      .end(function(error, result){
-        if (!error)
-        {
-          spaces = JSON.parse(result.text).resources;
-          callback(null);
-        }
-        else
-          callback(error);
-      }); 
-    },
-    function(callback){
-      sa
-      .get(API+'/v2/apps')
-      .set('Authorization', token)
-      .set('Accept', 'application/json')
-      .end(function(error, result){
-        if (!error)
-        {
-          applications = JSON.parse(result.text).resources;
-          callback(null);
-        }
-        else
-          callback(error);
-      }); 
-    },
-
-    function(callback){
-      // now dig a little deeper for runtime stats per app
-      var q = async.queue(function (task, cb) {
-        console.log('hello ' + task.entity.name);
-        cb();
-        }, 2);
-
-      q.drain = function() {
-        console.log('all items have been processed');
-        callback();
-      }
-     q.push(applications, function (err) {
-        console.log('finished processing bar');
-      });
-    }
-    ],
-    function (err) {
-      if (!err){
-        _.each(organizations,function(organization)
-        {
-          insert(root,organization,"-1");
-        });
-
-        _.each(spaces,function(space)
-        {
-          insert(organizations,space,space.entity.organization_guid);
-        });
-
-        _.each(applications,function(application)
-        {
-          insert(spaces,application,application.entity.space_guid);
-        });
-        res.json(root[0]); 
-      }
-      else
-        console.err(err);   
-  });
-}); 
-
-app.get('/login',function(req,res){
-  getToken(
-  {username: config.username, password: config.password},
-  function (error,result) {
-    if (!error) {
-      req.session.access_token = "bearer "+JSON.parse(result.text).access_token;
-      //console.log(req.session.access_token);
-      // get user_id
-      sa
-      .get(UAA+'/userinfo')
-      .set('Authorization', req.session.access_token)
-      .set('Accept', 'application/json')
-      .end(function(error, result){
-        if (!error)
-        {
-          req.session.user_id=JSON.parse(result.text).user_id;
-          res.cookie('access_token', req.session.access_token, { maxAge: 900000, httpOnly: false});
-          res.cookie('user_id', req.session.user_id, { maxAge: 900000, httpOnly: false});
-          console.log(req.session.access_token);
-          console.log(req.session.user_id);
-          res.redirect('/');
-        }
-        else
-        {
-          res.send(error);
-        }      
-      });  
-    }
-    else
-    {
-      res.send(error);
-    }
-  })
-});
-
-app.get('/logout', function (req, res) {
-  delete req.session.user_id;
-  delete req.session.access_token;
-  delete req.cookies;
-  res.redirect('/');
-});    
-
-http.createServer(app).listen(app.get('port'), function(){
-  configure(process.argv.length>2 ? process.argv[2]:"pivotal");
-  console.log("Express server listening on port " + app.get('port'));
-});
-
-</textarea>
-            </div>
-            <div class="tab-pane" id="client">
-              <textarea id="client_code" name="client_code" style="display: none; "><!DOCTYPE html>
+<!DOCTYPE html>
 <meta charset="utf-8">
 <title><%= title %></title>
+
 <style>
 
 circle {
@@ -356,7 +31,7 @@ text {
 }
 
 text.parent {
-  fill: #fff;
+  fill: steelblue;
   font-size: 20px;
 }
 
@@ -395,14 +70,15 @@ circle.child {
 
     </style>
 <body>
+
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 
 <script type="text/javascript">
 
-var w = 1280,
-    h = 800,
-    r = 720,
+var w = 1000,
+    h = 1000,
+    r = 640,
     x = d3.scale.linear().range([0, r]),
     y = d3.scale.linear().range([0, r]),
     node,
@@ -418,8 +94,8 @@ var vis = d3.select("body").insert("svg:svg", "h2")
   .append("svg:g")
     .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
 
-//d3.json("flare.json", function(data) {
-d3.json("/poll", function(data) {
+d3.json("apps", function(data) {
+
   node = root = data;
 
   var nodes = pack.nodes(root);
@@ -469,69 +145,57 @@ function zoom(d, i) {
   node = d;
   d3.event.stopPropagation();
 }
-    </script>
-</textarea>
-            </div>
-            <div class="tab-pane" id="manifest">
-              <textarea id="manifest_code" name="manifest_code" style="display: none; ">---
-applications:
-- name: bubbles
-  memory: 128M
-  instances: 1
-  host: bubbles
-  domain: cfapps.io
-  command: node app
-  path: .</textarea>
-            </div>
-            <div class="tab-pane" id="readme">
-              <strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </div> 
-          <div class="tab-pane" id="console">
-          CONSOLE OUTPUT
-        </div>
-      </div>                    
-    </div> 
-  </div>  
 
-
- 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
-    <!-- script type="text/javascript" src="/javascripts/gauge.js"></script-->
-
-    <script>
-      var editor = [];
-      editor["server"] = CodeMirror.fromTextArea(document.getElementById("server_code"), {
-        lineNumbers: true,
-        matchBrackets: true,
-        continueComments: "Enter",
-        extraKeys: {"Ctrl-Q": "toggleComment"}
-      });
-
-      editor["client"] = CodeMirror.fromTextArea(document.getElementById("client_code"), {
-        lineNumbers: true,
-        matchBrackets: true,
-        continueComments: "Enter",
-        extraKeys: {"Ctrl-Q": "toggleComment"}
-      });
-
-      editor["manifest"] = CodeMirror.fromTextArea(document.getElementById("manifest_code"), {
-        lineNumbers: true,
-        matchBrackets: true,
-        continueComments: "Enter",
-        extraKeys: {"Ctrl-Q": "toggleComment"}
-      });
     </script>
 
-    <script>
-    $(function () 
-    {
-       $('#sourceTabs a:last').tab('show');
 
-    })
+
+<!--
+<script>
+
+var diameter = 800,
+    format = d3.format(",d");
+
+var pack = d3.layout.pack()
+    //.sort(null)
+    .size([diameter - 4, diameter - 4])
+    .value(function(d) { return d.size; });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .append("g")
+    .attr("transform", "translate(2,2)");
+
+d3.json("poll", function(error, root) {
+//d3.json("spaces.json", function(error, root) {
+  //console.log(root);
+  //alert(JSON.stringify(root));
+  var node = svg.datum(root).selectAll(".node")
+      .data(pack.nodes)
+      .enter()
+      .append("g")
+      .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  node.append("title")
+      .text(function(d) { return d.name + (d.children ? "" : ": " + format(d.size)); });
+
+  node.append("circle")
+      .attr("r", function(d) { return d.r; });
+
+  node.filter(function(d) { return !d.children; }).append("text")
+      .attr("dy", ".3em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.name.substring(0, d.r / 3); });
+});
+
+d3.select(self.frameElement).style("height", diameter + "px");
+
 </script>
-<style id="_clearly_component__css" type="text/css">#next_pages_container { width: 5px; hight: 5px; position: absolute; top: -100px; left: -100px; z-index: 2147483647 !important; } </style>
-   </body>
-</html>
+-->
+
+
+
+
+
