@@ -1,3 +1,1 @@
-# Bubbles
-
-Explain how this Driblet was built and why it can be useful.
+Gives a live view of the resource utilization and status of all your driblets
