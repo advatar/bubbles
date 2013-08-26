@@ -9,14 +9,14 @@
       <link rel="stylesheet" href="css/bootstrap-switch.css">
       <link rel="stylesheet" href="lib/codemirror.css">
       <script src="//code.jquery.com/jquery.js"></script>
-      <script src="js/bootstrap.min.js"></script>
+      <script src="javascripts/bootstrap.min.js"></script>
 
-      <script src="lib/codemirror.js"></script>
-      <script src="addon/edit/matchbrackets.js"></script>
-      <script src="addon/edit/continuecomment.js"></script>
-      <script src="addon/comment/comment.js"></script>
+      <script src="javascripts/codemirror.js"></script>
+      <script src="javascripts/addon/edit/matchbrackets.js"></script>
+      <script src="javascripts/addon/edit/continuecomment.js"></script>
+      <script src="javascripts/addon/comment/comment.js"></script>
       <script src="javascript.js"></script>
-      <script src="js/bootstrap-switch.js"></script>
+      <script src="javascripts/bootstrap-switch.js"></script>
       <style type="text/css">
         .CodeMirror { border-top: 1px solid black; 
                       border-bottom: 1px solid black;} 
@@ -31,22 +31,13 @@
       <div class="container">
         <div class="page-header">
           <h1 class="text-muted"><%=title%></h1>
+                       <div style="margin-top:10px;padding:5px;position:relative;bottom:5px;">
+                <!--<input type="text" class="form-group-lg" value="<%=api%>"> -->
+                <button type="button" class="btn btn-default ">RUN</button>&nbsp;<button type="button" class="btn btn-default ">INSTALL</button>&nbsp;              
+                <div class="make-switch"><input type="checkbox" class="form-group-lg"></div>
+              </div>
+
         </div>
-        <!--
-        <p class="lead">Clone this app!</p>
-        <div class="row">
-          <div class="col-md-5">
-            <form class="form-inline" role="form">
-              <fieldset>
-                <div class="form-group-lg">
-                  <label>API ENDPOINT</label>
-                  <input type="text" class="form-control form-group-lg" value="<%=api%>">
-                </div>
-              </fieldset>
-            </form>
-          </div>
-        </div>
-        -->
         <div class="row">
           <div class="col-md-4">
               <div class="pull-left">
@@ -56,12 +47,7 @@
           <div class="col-md-6">
             <fieldset>
               <label class=text-muted>Seeing is believing</label><br>Visualization of the different layers that make up a full stack cloud. From the metal at the bottom via the OpenStack IaaS to the Cloudfoundry Platform layer and finally the actual application.
-              <div style="margin-top:10px;padding:5px;position:relative;bottom:5px;">
-                <!--<input type="text" class="form-group-lg" value="<%=api%>"> -->
-                <button type="button" class="btn btn-default ">PUSH</button>              
-                <div class="make-switch"><input type="checkbox" class="form-group-lg"></div>
-              </div>
-            </fieldset>
+             </fieldset>
           </div>
         </div>
         <div class="row">
