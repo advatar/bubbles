@@ -36,7 +36,6 @@ app.get('/',checkAuth,function(req,res){
   res.render('index', { title: 'Bubbles'});
 }); 
 
-
 app.get('/apps',checkAuth,function(req,res){
   root = reset();
   token = req.session.access_token || req.cookies.access_token;
