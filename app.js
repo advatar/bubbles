@@ -179,14 +179,8 @@ function reset()
 
 function checkAuth(req, res, next) {
 
-  if (req.cookies.access_token && req.cookies.user_id)
+  if (req.session.access_token && req.session.user_id)
     next();
-  else if (config.token && config.user_id)
-  {
-    res.cookie('access_token', config.token, { maxAge: 900000, httpOnly: false});
-    res.cookie('user_id', config.user_id, { maxAge: 900000, httpOnly: false});
-    next();
-  }
   else {
     res.redirect('/login');
   } 
