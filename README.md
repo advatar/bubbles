@@ -1,1 +1,1 @@
-Gives a live view of the resource utilization and status of all your driblets
+See the entire layout of your cloudscape with organizations, spaces and apps.
